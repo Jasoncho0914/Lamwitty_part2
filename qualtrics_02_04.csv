@@ -1,0 +1,17 @@
+participants,Participant study:,This voice agent made me feel: - Successful.,This voice agent made me feel: - Frustrated.,This voice agent made me feel: - Helped.,This voice agent made me feel: - Efficient.,This voice agent made me feel: - Happy.,This voice agent made me feel: - Agile.,This voice agent made me feel: - Pragmatic.,"This voice agent was: - Extraverted, enthusiastic.","This voice agent was: - Critical, quarrelsome.","This voice agent was: - Dependable, self-disciplined.","This voice agent was: - Anxious, easily upset.","This voice agent was: - Open to new experiences, complex.","This voice agent was: - Reserved, quiet.","This voice agent was: - Sympathetic, warm.","This voice agent was: - Disorganized, careless.","This voice agent was: - Calm, emotionally stable.","This voice agent was: - Conventional, uncreative.",This voice agent was: - Smart.,This voice agent was: - Trustworthy.,This voice agent was: - Likeable.,This voice agent was: - Pragmatic.,This voice agent was: - Helpful.,Did this voice agent ever make a mistake?,Did this agent ever try to repair a mistake it made?,A voice agent that always tried to correct itself after a mistake ... - ... would annoy me,A voice agent that always tried to correct itself after a mistake ... - ... would waste my time,A voice agent that always tried to correct itself after a mistake ... - ... would improve the conversation quality,A voice agent that always tried to correct itself after a mistake ... - ... would help me feel less frustrated
+P001,1,6,3,7,7,5,4,4,6,2,6,3,2,2,3,1,6,6,4,4,4,3,7,3,5,6,4,0,5
+P002,2,4,6,5,3,4,4,4,4,1,7,1,4,2,2,1,7,6,5,2,4,4,3,1,5,4,7,5,5
+P003,3,3,7,5,5,5,4,6,5,3,5,6,4,6,5,4,6,6,6,4,6,4,5,1,4,7,5,1,1
+P004,1,7,1,7,7,7,7,7,6,1,7,1,6,2,5,1,7,7,7,6,6,7,7,3,5,6,6,3,3
+P005,2,2,6,2,1,2,2,2,4,4,3,1,4,3,2,1,5,2,5,4,4,4,4,1,5,9,3,5,8
+P006,3,6,5,7,6,5,5,4,5,1,5,1,4,2,3,1,6,4,6,5,5,6,6,1,4,7,1,4,2
+P007,1,6,1,6,5,5,6,6,5,3,6,2,4,3,5,2,6,4,5,5,5,5,6,3,5,4,3,5,4
+P008,2,3,5,3,5,2,3,4,6,4,3,3,3,3,5,3,3,5,5,6,5,3,3,1,5,0,0,10,10
+P009,3,6,5,6,5,6,5,6,4,2,5,5,6,3,4,3,4,3,6,6,5,5,5,3,4,7,6,3,3
+P010,1,4,2,6,6,4,3,4,6,3,5,3,3,3,4,2,5,5,5,1,5,4,6,3,5,5,5,5,5
+P011,2,1,7,1,1,1,6,1,1,5,3,5,6,4,4,6,3,6,1,1,1,4,1,1,5,3,9,7,6
+P012,3,5,6,5,3,5,4,5,5,1,3,6,4,2,2,1,3,4,6,6,6,6,7,3,5,5,1,8,10
+P013,1,6,3,2,5,6,5,5,4,2,5,2,4,5,4,2,6,5,6,7,6,5,5,3,5,4,5,3,2
+P014,2,3,5,4,3,3,4,4,6,2,3,1,2,2,5,2,6,5,5,4,3,4,3,1,5,3,4,6,6
+P015,3,6,2,6,5,5,6,6,5,2,6,2,7,3,5,2,7,5,6,6,6,6,6,3,4,1,1,8,8
+P016,1,6,1,5,6,4,5,6,5,1,5,1,4,2,4,1,6,4,5,4,5,6,6,3,5,1,2,3,7
