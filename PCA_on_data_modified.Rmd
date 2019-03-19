@@ -1,0 +1,169 @@
+---
+title: "PCA_with_qualtrics"
+author: "Jason Cho,bc454"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  word_document: default
+---
+
+
+
+
+```{r Setup and data loading,include=TRUE, echo=FALSE}
+
+#codes are based on http://www.rpubs.com/bpiccolo/pcaplots
+
+library(readr)
+library(rgeos)
+library(agricolae)
+library(DescTools)
+library(plyr)
+library(car)
+library(maptools)
+
+
+setwd("C:/Users/bj091/lamwitty_part2")
+qualtrics <- read_csv("Data/qualtrics_03_06_modified.csv")
+
+colnames(qualtrics)
+
+#Dropping unnecessary features from column
+drops <- c("Did this voice agent ever make a mistake?","Did this agent ever try to repair a mistake it made?","repair","Participant number:","Participant study:")
+data_wo_labels = qualtrics[ , !(names(qualtrics) %in% drops)]
+
+#I am replacing column names to numbers since they are too long.
+#They are stored in dictionary so that I can check later the original names
+numb_to_feat=list()
+for (i in c(1:26)){
+  numb_to_feat[i] = colnames(data_wo_labels)[i]
+}
+colnames(data_wo_labels)<-c(1:26)
+
+# Performing Principal componenet Analysis
+p_object =prcomp(data_wo_labels,scale.=TRUE)
+
+```
+
+
+```{r summary, echo=FALSE}
+print(summary(p_object))
+cat("\n","Usually, principal components with variance > 1 are considered signficant(may differ by field). According to the summary above, 8 principal componenets account for ~ 77 percent of the total variance in the data. This means if we were to represent the data using just seven principal componenets, we will be able to explain 78 percent of variability in the data.","\n")
+```
+
+
+
+```{r scores, echo=FALSE}
+participant_study = qualtrics[["Participant study:"]]
+PCAcolors <- c("#999999", "#E69F00", "#56B4E9", "#009E73")[as.integer(participant_study)]
+
+re_vs_no = qualtrics[["repair"]]
+PCAcolors_2 <- c("#66c2a5","#fc8d62")[as.factor(re_vs_no)]
+
+
+PCAscores <- p_object$x
+PCAloadings <- p_object$rotation
+
+cat("\n","")
+
+plot(PCAscores[,1:2],  # x and y data
+     pch=21,           # point shape
+     col=PCAcolors,    # point border color
+     bg=PCAcolors,     # point color
+     cex=1.2,          # point size
+     main="Four Conditions: Scores"     # title of plot
+)
+legend("topright",                                # position of legend
+       legend=unique(participant_study),          # legend display
+       pch=21,                                    # point shape
+       pt.bg=unique(PCAcolors),                   # point colors
+       pt.cex=1.5,                                # point size
+       col = unique(PCAcolors)                    # point border color
+)
+
+
+plot(PCAscores[,1:2],  # x and y data
+     pch=21,           # point shape
+     col=PCAcolors_2,    # point border color
+     bg=PCAcolors_2,     # point color
+     cex=1.2,          # point size
+     main="Repair vs No repair: Scores"     # title of plot
+)
+legend("topright",                                # position of legend
+       legend=unique(c("No repair","repair")),          # legend display
+       pch=21,                                    # point shape
+       pt.bg=unique(PCAcolors_2),                   # point colors
+       pt.cex=1.5,                                # point size
+       col = unique(PCAcolors_2)                    # point border color
+)
+
+
+cat("\n","These two graphs represent scatter plots of all observations drawn on the first two principal components. PC1 and PC2 account for accumulated variance of ~50 percent in the data. Though not completely accurate, These scatter plots are good approximation of our high-dimensional dataset. As you can see from the first graph,All condition two observations are located on the right side of the graph, whereas condition one on the left side. Condition three and four, on the other hand, arn't clearly distinguishable from one another. This supports our findings from looking at boxplots. While condition 2 and condition 1 were consistently 'worse' and 'better' depending on the features, condition 3 and 4 had similar means.  The second graph was color-coded based on repair vs no repair. ","\n")
+
+
+
+
+```
+```{r loadings, echo=FALSE}
+PCAvarAxis <- function(PCA, decimal=1) {
+    pcavar <- round((PCA$sdev^2)/sum((PCA$sdev^2)),3)*100   #Calculate % variance explained
+    PC1var <- paste("Principal Component 1 (", pcavar[1], "%)", sep="")
+    PC2var <- paste("Principal Component 2 (", pcavar[2], "%)", sep="")
+    PC3var <- paste("Principal Component 3 (", pcavar[3], "%)", sep="")
+    PC4var <- paste("Principal Component 4 (", pcavar[4], "%)", sep="") 
+    PC5var <- paste("Principal Component 5 (", pcavar[5], "%)", sep="")     
+    return(list(PC1=PC1var, PC2=PC2var, PC3=PC3var, PC4=PC4var, PC5=PC5var))
+}   
+
+explainPCAvar <- PCAvarAxis(p_object)
+
+
+plot(PCAloadings[,1:2],   # x and y data
+     pch=21,              # point shape
+     bg="black",          # point color
+     cex=1.0,             # point size
+    # type="n",           # does not plot points
+     axes=FALSE,          # does not print axes
+     xlab="",             # removes x label
+     ylab=""              # removes y label
+)
+pointLabel(PCAloadings[,1:2],             # set position of labels
+           labels=rownames(PCAloadings),  # print labels
+           cex=0.8                          # set size of label
+) # pointLabel will try to position the text around the points
+axis(1,                 # display x-axis
+     cex.axis=1.0,      # set size of text
+     lwd=1.0            # set size of axis line
+)
+axis(2,                 # display y-axis
+     las=2,             # argument sets direction of text, 2 is perpendicular
+     cex.axis=1.0,      # set size of text
+     lwd=1.0            # set size of axis line
+)
+box(lwd=1.5             # line width of box surrounding plot
+)
+title(xlab=explainPCAvar[["PC1"]],    # % variance explained on PC1
+      ylab=explainPCAvar[["PC2"]],    # % variance explained on PC2 
+      main="Loading",                 # Title
+      cex.lab=1.0,                    # size of label text
+      cex.main=1.0                    # size of title text
+)
+
+cat("\n","The graph above represents loadings of each features plotted on the first two principal components. I replaced feature names with numbers. From this graph we can see that")
+
+for (x in c(1,22,3,18,5,19,21,10,7,6,20)){
+  cat(numb_to_feat[[x]],"\n")
+}
+
+cat('These features are similar in characterisitcs. (These are clusterd on the left, labeld 22,1,3,4,18,5 and etc)','\n')
+
+for (x in c(15,2,9)){
+  cat(numb_to_feat[[x]],"\n")
+}
+
+cat('And, these features are similar in characterisitcs. (These are clusterd on the right 15,9 and 2','\n')
+
+cat('\n',"From this, we can deduce that the first feature group represents the 'good' group while the second group represents the 'bad'")
+
+
+```
+
