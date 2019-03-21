@@ -6,3 +6,4 @@
 5) __Output/Qualtrics_percentage_graph.html__: Demo Line graph for one feature as of March 6th (Repair vs no repair/ 2 checks)
 6) __Output/Qualtrics_percentage_graph_all_features.html__: Line graphs for all features as of March 6th (Repair vs no repair/ 2 checks)
 7) __PCA_on_data_modified__: PCA analysis on data as of March 20th
+9) Anova_26features: anova for 26features on data as of March 20th
